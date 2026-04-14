@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Reiki Alma · Cursos de Reiki</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- ============================================================
+  ✦  ZONA DE CONFIGURACIÓN  ✦
+  Todo lo que necesitas editar está aquí. No toques nada
+  más abajo a menos que quieras cambiar la estructura HTML.
+  ============================================================ -->
+<script>
+const CONFIG = {
+
+  /* ── IDENTIDAD ──────────────────────────────────────────── */
+  nombre:    "Reiki Alma",           // Nombre del negocio
+  lema:      "Sanación · Energía · Equilibrio",
+  anio:      "2026",                 // Año del copyright en el footer
+
+  /* ── CONTACTO ───────────────────────────────────────────── */
+  // WhatsApp: pon tu número con código de país, sin + ni espacios
+  // Ejemplo España: 34612345678  (34 = código España, luego tu número)
+  whatsapp:   "34600000000",
+
+  // Email que se muestra en la sección de contacto
+  email:      "hola@reikialma.com",
+  instagram:  "@reikialma",
+  ubicacion:  "Madrid, España · También online",
+
+  // ─────────────────────────────────────────────────────────
+  // FORMULARIO DE CONTACTO — Para recibir emails:
+  //
+  // 1. Ve a https://web3forms.com
+  // 2. Escribe tu email y haz clic en "Get your Access Key"
+  // 3. Te llegará un email con tu clave. Copia la clave aquí:
+  //
+  formularioAccessKey: "TU_CLAVE_DE_WEB3FORMS_AQUI",
+  //
+  // 4. La primera vez que alguien envíe el formulario,
+  //    recibirás un email de confirmación. Acéptalo y listo.
+  // ─────────────────────────────────────────────────────────
+
+  /* ── HERO (portada) ─────────────────────────────────────── */
+  heroTituloParte1: "Descubre el poder",
+  heroTituloParte2: "Reiki",         // Esta palabra se muestra en dorado
+  heroSubtitulo: "Aprende a canalizar la energía universal y transforma tu vida y la de quienes te rodean. Cursos certificados para todos los niveles.",
+
+  /* ── SOBRE MÍ ───────────────────────────────────────────── */
+  sobreTexto1: "Llevo más de 10 años practicando y enseñando Reiki, guiando a cientos de personas en su camino hacia el bienestar físico, emocional y espiritual.",
+  sobreTexto2: "Mi misión es acompañarte en este proceso de autoconocimiento y sanación, ofreciéndote herramientas prácticas y profundas para equilibrar tu energía vital.",
+  stats: [
+    { num: "10+",  label: "Años de práctica"  },
+    { num: "300+", label: "Alumnos formados"  },
+    { num: "100%", label: "Certificados"      },
+  ],
+
+  /* ── CURSOS ─────────────────────────────────────────────── */
+  // Puedes añadir, quitar o reordenar cursos en esta lista.
+  // "destacado: true" añade el banner "Más popular".
+  // La información económica se comunica de forma privada al interesado.
+  cursos: [
+    {
+      icono:      "🌱",
+      nivel:      "Nivel I",
+      nombre:     "Reiki Usui Nivel 1",
+      tagline:    "El despertar energético",
+      destacado:  false,
+      contenidos: [
+        "Historia y origen del Reiki",
+        "Los 5 principios del Reiki",
+        "Iniciación y activación de canales",
+        "Técnicas de autoaplicación",
+        "Tratamiento a personas y animales",
+        "Diploma oficial de Nivel 1",
+      ],
+    },
+    {
+      icono:      "🔮",
+      nivel:      "Nivel II",
+      nombre:     "Reiki Usui Nivel 2",
+      tagline:    "Ampliación y símbolos sagrados",
+      destacado:  true,   // ← Cambia a false para quitar el badge
+      contenidos: [
+        "Los 3 símbolos sagrados del Reiki",
+        "Técnica de Reiki a distancia",
+        "Programación de intenciones",
+        "Tratamientos avanzados",
+        "Práctica profesional",
+        "Diploma oficial de Nivel 2",
+      ],
+    },
+    {
+      icono:      "👑",
+      nivel:      "Maestría",
+      nombre:     "Reiki Usui Maestría",
+      tagline:    "Conviértete en maestro/a",
+      destacado:  false,
+      contenidos: [
+        "Símbolo maestro y sus usos",
+        "Técnicas de iniciación y atunements",
+        "Cómo enseñar Reiki a otros",
+        "Gestión de un centro holístico",
+        "Mentoring personal incluido",
+        "Diploma oficial de Maestra/o",
+      ],
+    },
+  ],
+
+  /* ── PROMOCIÓN ──────────────────────────────────────────── */
+  // Cambia "promoActiva" a false para ocultar este banner.
+  promoActiva: true,
+  promoEmoji:  "🌟",
+  promoEtiq:   "Nueva convocatoria",
+  promoTitulo1: "Pack",
+  promoTitulo2: "Niveles 1 + 2",    // Texto en dorado
+  promoTitulo3: "en formato intensivo",
+  promoTexto:  "Completa los dos primeros niveles en un único fin de semana. Grupos reducidos para garantizar una atención personalizada. ¡Plazas muy limitadas!",
+  promoCTA:    "Solicitar información",
+
+  /* ── PRÓXIMAS FECHAS ────────────────────────────────────── */
+  // Añade, edita o borra eventos. "tagGold" es la etiqueta dorada.
+  eventos: [
+    {
+      dia:     "15",
+      mes:     "May",
+      titulo:  "Reiki Nivel 1 · Presencial",
+      desc:    "10:00 – 18:00h · Madrid centro · Incluye material y diploma",
+      tags:    ["Nivel 1", "Presencial"],
+      tagGold: "3 plazas libres",
+    },
+    {
+      dia:     "22",
+      mes:     "May",
+      titulo:  "Reiki Nivel 2 · Online",
+      desc:    "10:00 – 17:00h · Zoom · Grabación incluida",
+      tags:    ["Nivel 2", "Online"],
+      tagGold: "5 plazas libres",
+    },
+    {
+      dia:     "7",
+      mes:     "Jun",
+      titulo:  "Pack Niveles 1 + 2 · Presencial",
+      desc:    "Sábado y domingo · Madrid · Formato intensivo de fin de semana",
+      tags:    ["Pack", "Presencial"],
+      tagGold: "Última convocatoria",
+    },
+    {
+      dia:     "21",
+      mes:     "Jun",
+      titulo:  "Reiki Maestría · Intensivo",
+      desc:    "Fin de semana completo · Retiro privado · Grupos reducidos",
+      tags:    ["Maestría", "Intensivo"],
+      tagGold: "Consultar plazas",
+    },
+  ],
+
+  /* ── TESTIMONIOS ────────────────────────────────────────── */
+  testimonios: [
+    {
+      texto:  "Hacer el curso de Reiki cambió mi vida. Aprendí a gestionar el estrés y ahora lo aplico todos los días. La enseñanza fue clara, profunda y con mucho cariño.",
+      nombre: "Laura M.",
+      curso:  "Nivel 1 · Madrid",
+      emoji:  "🌸",
+    },
+    {
+      texto:  "Empecé sin saber nada y ahora trabajo como terapeuta. La formación de maestría fue completa, práctica y transformadora. 100% recomendable.",
+      nombre: "Carlos R.",
+      curso:  "Maestría · Online",
+      emoji:  "🔮",
+    },
+    {
+      texto:  "El ambiente del curso fue increíble. Grupos pequeños, mucha práctica y un seguimiento personalizado que no esperaba. Repetiré sin duda.",
+      nombre: "Ana S.",
+      curso:  "Nivel 2 · Presencial",
+      emoji:  "✨",
+    },
+  ],
+
+};
+/* ============================================================
+  Fin de la zona de configuración.
+  No es necesario editar nada más abajo.
+  ============================================================ */
+</script>
+
+<!-- ── NAVEGACIÓN ─────────────────────────────────────────── -->
+<nav id="navbar">
+  <div class="nav-logo">
+    <span class="symbol">✦</span>
+    <span id="nav-nombre"></span>
+  </div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#inicio">Inicio</a></li>
+    <li><a href="#sobre-mi">Sobre mí</a></li>
+    <li><a href="#cursos">Cursos</a></li>
+    <li><a href="#proximos">Próximos</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+  <a href="#contacto" class="nav-cta">Solicitar info</a>
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- ── HERO ───────────────────────────────────────────────── -->
+<section class="hero" id="inicio">
+  <div class="hero-glow"></div>
+  <div class="hero-symbol">✦</div>
+  <div class="hero-badge" id="hero-lema"></div>
+  <h1 id="hero-titulo"></h1>
+  <p class="hero-sub" id="hero-sub"></p>
+  <div class="hero-btns">
+    <a href="#cursos" class="btn-primary">Ver cursos</a>
+    <a href="#contacto" class="btn-secondary">Solicitar información</a>
+  </div>
+  <div class="hero-scroll">Explorar</div>
+</section>
+
+<!-- ── SOBRE MÍ ───────────────────────────────────────────── -->
+<section class="about" id="sobre-mi">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-image fade-in">
+        <div class="about-image-box">☽</div>
+        <div class="about-image-accent"></div>
+      </div>
+      <div class="about-content fade-in">
+        <div class="section-label">Sobre mí</div>
+        <h2 class="section-title">Terapeuta y<br/>Maestra de <span>Reiki</span></h2>
+        <div class="divider"></div>
+        <p id="sobre-texto1"></p>
+        <p id="sobre-texto2"></p>
+        <div class="about-stats" id="stats-grid"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CURSOS ──────────────────────────────────────────────── -->
+<section class="courses" id="cursos">
+  <div class="container">
+    <div class="courses-header fade-in">
+      <div class="section-label">Formación</div>
+      <h2 class="section-title">Nuestros <span>Cursos</span></h2>
+      <div class="divider"></div>
+      <p class="section-desc">Desde el primer contacto con el Reiki hasta la maestría. Elige el nivel que se adapta a tu momento.</p>
+    </div>
+    <div class="courses-grid" id="cursos-grid"></div>
+  </div>
+</section>
+
+<!-- ── BANNER PROMOCIÓN ────────────────────────────────────── -->
+<section class="promo" id="promo-section">
+  <div class="container">
+    <div class="promo-inner fade-in">
+      <div>
+        <div class="promo-badge" id="promo-badge"></div>
+        <h2 class="section-title" id="promo-titulo"></h2>
+        <p id="promo-texto"></p>
+      </div>
+      <div class="promo-cta">
+        <a href="#contacto" id="promo-cta-link"></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PRÓXIMAS FECHAS ─────────────────────────────────────── -->
+<section class="upcoming" id="proximos">
+  <div class="container">
+    <div class="fade-in" style="margin-bottom: 50px;">
+      <div class="section-label">Agenda</div>
+      <h2 class="section-title">Próximas <span>Fechas</span></h2>
+      <div class="divider"></div>
+      <p class="section-desc">Apunta las fechas y reserva tu plaza. Las plazas son limitadas para garantizar una atención personalizada.</p>
+    </div>
+    <div class="upcoming-grid fade-in" id="eventos-grid"></div>
+  </div>
+</section>
+
+<!-- ── TESTIMONIOS ─────────────────────────────────────────── -->
+<section class="testimonials" id="testimonios">
+  <div class="container">
+    <div class="testimonials-header fade-in">
+      <div class="section-label">Testimonios</div>
+      <h2 class="section-title">Lo que dicen mis <span>alumnos</span></h2>
+      <div class="divider"></div>
+    </div>
+    <div class="testimonials-grid" id="testimonios-grid"></div>
+  </div>
+</section>
+
+<!-- ── CONTACTO ────────────────────────────────────────────── -->
+<section class="contact" id="contacto">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-info fade-in">
+        <div class="section-label">Contacto</div>
+        <h2 class="section-title">¿Tienes <span>dudas?</span><br/>Escríbeme</h2>
+        <div class="divider"></div>
+        <p>Rellena el formulario y te respondo personalmente en menos de 24 horas. También puedes escribirme por WhatsApp si lo prefieres.</p>
+        <div class="contact-items" id="contact-items"></div>
+      </div>
+      <div class="contact-form fade-in">
+        <h3>Solicitar información</h3>
+        <p class="form-sub">Te respondo en menos de 24h · Sin compromiso</p>
+        <form id="contactForm" onsubmit="submitForm(event)">
+          <!-- Campos internos de Web3Forms (no visibles) -->
+          <input type="hidden" name="access_key" id="form-access-key" value="" />
+          <input type="hidden" name="subject" value="Nueva solicitud de información — Cursos de Reiki" />
+          <input type="hidden" name="from_name" value="Web Reiki" />
+          <input type="hidden" name="botcheck" style="display:none" />
+          <div class="form-row">
+            <div class="form-group">
+              <label for="f-nombre">Nombre</label>
+              <input type="text" id="f-nombre" name="Nombre" placeholder="Tu nombre" required />
+            </div>
+            <div class="form-group">
+              <label for="f-apellido">Apellido</label>
+              <input type="text" id="f-apellido" name="Apellido" placeholder="Tu apellido" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="f-email">Email</label>
+              <input type="email" id="f-email" name="email" placeholder="tu@email.com" required />
+            </div>
+            <div class="form-group">
+              <label for="f-telefono">Teléfono</label>
+              <input type="tel" id="f-telefono" name="Teléfono" placeholder="+34 600 000 000" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="f-curso">Curso de interés</label>
+            <select id="f-curso" name="Curso de interés" required>
+              <option value="" disabled selected>Selecciona un curso</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="f-mensaje">Mensaje (opcional)</label>
+            <textarea id="f-mensaje" name="Mensaje" placeholder="¿Tienes alguna pregunta o comentario?"></textarea>
+          </div>
+          <div class="form-check">
+            <input type="checkbox" id="f-privacidad" required />
+            <label for="f-privacidad">He leído y acepto la <a href="#">política de privacidad</a>. Mis datos serán usados únicamente para contactarme sobre los cursos.</label>
+          </div>
+          <button type="submit" class="btn-submit">Enviar solicitud ✦</button>
+        </form>
+        <div class="form-success" id="formSuccess" style="display:none">
+          <div class="success-icon">✦</div>
+          <h4>¡Mensaje recibido!</h4>
+          <p>Gracias por tu interés. Te responderé en menos de 24 horas.</p>
+          <a href="#inicio" style="display:inline-block;margin-top:16px;color:var(--gold);font-size:0.85rem;letter-spacing:1px;">← Volver al inicio</a>
+        </div>
+        <div class="form-error" id="formError" style="display:none">
+          <div class="success-icon">⚠️</div>
+          <h4 style="color:var(--lavender)">No se pudo enviar</h4>
+          <p>Hubo un problema al enviar el formulario. Por favor escríbeme directamente por WhatsApp.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ──────────────────────────────────────────────── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="nav-logo"><span class="symbol">✦</span> <span class="footer-nombre"></span></div>
+        <p>Formación certificada en Reiki Usui para todos los niveles. Transforma tu vida y la de quienes te rodean a través de la energía universal.</p>
+        <div class="footer-social">
+          <div class="social-link" title="Instagram">📸</div>
+          <div class="social-link" title="WhatsApp">💬</div>
+          <div class="social-link" title="Facebook">🌐</div>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Cursos</h4>
+        <ul id="footer-cursos"></ul>
+      </div>
+      <div class="footer-col">
+        <h4>Info</h4>
+        <ul>
+          <li><a href="#sobre-mi">Sobre mí</a></li>
+          <li><a href="#proximos">Próximas fechas</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+          <li><a href="#">Política de privacidad</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© <span class="footer-anio"></span> <span class="footer-nombre"></span> · Todos los derechos reservados</p>
+      <p>Diseñado con ✦ para sanar el mundo</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ── BOTÓN WHATSAPP ──────────────────────────────────────── -->
+<a id="whatsapp-btn" href="#" target="_blank" class="whatsapp-float">
+  <div class="whatsapp-tooltip">¡Escríbeme por WhatsApp!</div>
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+</a>
+
+<!-- ============================================================
+  JAVASCRIPT — No es necesario editar nada aquí abajo.
+  ============================================================ -->
+<script>
+
+/* ── Inyectar CONFIG en el DOM ─────────────────────────────── */
+function renderSite() {
+
+  // Título de la pestaña
+  document.title = CONFIG.nombre + ' · Cursos de Reiki';
+
+  // Nombre en varios sitios
+  document.getElementById('nav-nombre').textContent = CONFIG.nombre;
+  document.querySelectorAll('.footer-nombre').forEach(el => el.textContent = CONFIG.nombre);
+  document.querySelectorAll('.footer-anio').forEach(el => el.textContent = CONFIG.anio);
+
+  // Hero
+  document.getElementById('hero-lema').textContent = CONFIG.lema;
+  document.getElementById('hero-titulo').innerHTML =
+    CONFIG.heroTituloParte1 + '<br/>del <span>' + CONFIG.heroTituloParte2 + '</span>';
+  document.getElementById('hero-sub').textContent = CONFIG.heroSubtitulo;
+
+  // Sobre mí
+  document.getElementById('sobre-texto1').textContent = CONFIG.sobreTexto1;
+  document.getElementById('sobre-texto2').textContent = CONFIG.sobreTexto2;
+  document.getElementById('stats-grid').innerHTML = CONFIG.stats.map(s =>
+    `<div class="stat"><span class="stat-num">${s.num}</span><span class="stat-label">${s.label}</span></div>`
+  ).join('');
+
+  // Cursos
+  document.getElementById('cursos-grid').innerHTML = CONFIG.cursos.map(c => `
+    <div class="course-card ${c.destacado ? 'featured' : ''} fade-in">
+      ${c.destacado ? '<div class="course-badge-featured">⭐ Más popular</div>' : ''}
+      <div class="course-top">
+        <div class="course-icon">${c.icono}</div>
+        <div class="course-level">${c.nivel}</div>
+        <h3 class="course-name">${c.nombre}</h3>
+        <p class="course-tagline">${c.tagline}</p>
+      </div>
+      <div class="course-body">
+        <ul class="course-features">
+          ${c.contenidos.map(item => `<li>${item}</li>`).join('')}
+        </ul>
+        <div class="course-footer course-footer--center">
+          <a href="#contacto" class="btn-enroll">Solicitar información</a>
+        </div>
+      </div>
+    </div>
+  `).join('');
+
+  // Promoción
+  const promoSection = document.getElementById('promo-section');
+  promoSection.style.display = CONFIG.promoActiva ? '' : 'none';
+  if (CONFIG.promoActiva) {
+    document.getElementById('promo-badge').innerHTML = CONFIG.promoEmoji + ' ' + CONFIG.promoEtiq;
+    document.getElementById('promo-titulo').innerHTML =
+      CONFIG.promoTitulo1 + ' <span>' + CONFIG.promoTitulo2 + '</span><br/>' + CONFIG.promoTitulo3;
+    document.getElementById('promo-texto').textContent = CONFIG.promoTexto;
+    document.getElementById('promo-cta-link').textContent = CONFIG.promoCTA;
+  }
+
+  // Próximas fechas
+  document.getElementById('eventos-grid').innerHTML = CONFIG.eventos.map(e => `
+    <div class="event-card">
+      <div class="event-date">
+        <span class="day">${e.dia}</span>
+        <span class="month">${e.mes}</span>
+      </div>
+      <div class="event-info">
+        <h4>${e.titulo}</h4>
+        <p>${e.desc}</p>
+        <div class="event-tags">
+          ${e.tags.map(t => `<span class="tag">${t}</span>`).join('')}
+          ${e.tagGold ? `<span class="tag gold">${e.tagGold}</span>` : ''}
+        </div>
+      </div>
+    </div>
+  `).join('');
+
+  // Testimonios
+  document.getElementById('testimonios-grid').innerHTML = CONFIG.testimonios.map(t => `
+    <div class="testimonial fade-in">
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-text">"${t.texto}"</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">${t.emoji}</div>
+        <div>
+          <div class="author-name">${t.nombre}</div>
+          <div class="author-course">${t.curso}</div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+
+  // Contacto — datos
+  document.getElementById('contact-items').innerHTML = `
+    <div class="contact-item">
+      <div class="contact-icon">📱</div>
+      <div><div class="contact-item-label">WhatsApp</div>
+      <div class="contact-item-value">+${CONFIG.whatsapp}</div></div>
+    </div>
+    <div class="contact-item">
+      <div class="contact-icon">📧</div>
+      <div><div class="contact-item-label">Email</div>
+      <div class="contact-item-value">${CONFIG.email}</div></div>
+    </div>
+    <div class="contact-item">
+      <div class="contact-icon">📍</div>
+      <div><div class="contact-item-label">Ubicación</div>
+      <div class="contact-item-value">${CONFIG.ubicacion}</div></div>
+    </div>
+    <div class="contact-item">
+      <div class="contact-icon">📸</div>
+      <div><div class="contact-item-label">Instagram</div>
+      <div class="contact-item-value">${CONFIG.instagram}</div></div>
+    </div>
+  `;
+
+  // Contacto — opciones del select de cursos
+  const select = document.getElementById('f-curso');
+  CONFIG.cursos.forEach(c => {
+    const opt = document.createElement('option');
+    opt.textContent = c.nombre;
+    select.appendChild(opt);
+  });
+  const optNo = document.createElement('option');
+  optNo.textContent = 'Todavía no lo sé';
+  select.appendChild(optNo);
+
+  // Footer — lista de cursos
+  document.getElementById('footer-cursos').innerHTML = CONFIG.cursos.map(c =>
+    `<li><a href="#cursos">${c.nombre}</a></li>`
+  ).join('');
+
+  // WhatsApp botón
+  const msg = encodeURIComponent('Hola! Me gustaría recibir información sobre los cursos de Reiki 🙏');
+  document.getElementById('whatsapp-btn').href = `https://wa.me/${CONFIG.whatsapp}?text=${msg}`;
+
+  // Inyectar access key en el campo oculto del formulario
+  document.getElementById('form-access-key').value = CONFIG.formularioAccessKey;
+}
+
+renderSite();
+
+/* ── Menú móvil ────────────────────────────────────────────── */
+function toggleMenu() {
+  document.getElementById('navLinks').classList.toggle('open');
+}
+document.querySelectorAll('.nav-links a').forEach(link => {
+  link.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open'));
+});
+
+/* ── Animaciones al hacer scroll ───────────────────────────── */
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+// Observar los elementos ya presentes + los generados dinámicamente
+function observeAll() {
+  document.querySelectorAll('.fade-in:not(.visible)').forEach(el => observer.observe(el));
+}
+observeAll();
+setTimeout(observeAll, 100); // Segunda pasada para elementos dinámicos
+
+/* ── Barra de nav que se compacta al bajar ─────────────────── */
+window.addEventListener('scroll', () => {
+  const nav = document.getElementById('navbar');
+  nav.style.padding = window.scrollY > 60 ? '12px 40px' : '18px 40px';
+});
+
+/* ── Formulario de contacto — envío real a Web3Forms ────────── */
+async function submitForm(e) {
+  e.preventDefault();
+
+  const form    = document.getElementById('contactForm');
+  const btn     = form.querySelector('.btn-submit');
+  const success = document.getElementById('formSuccess');
+  const error   = document.getElementById('formError');
+
+  // Estado de carga
+  btn.textContent = 'Enviando...';
+  btn.disabled = true;
+  btn.style.opacity = '0.7';
+
+  try {
+    const data = new FormData(form);
+    const response = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      body: data
+    });
+    const result = await response.json();
+
+    if (result.success) {
+      // Éxito — ocultar formulario, mostrar mensaje
+      form.style.opacity = '0';
+      form.style.transition = 'opacity 0.4s';
+      setTimeout(() => {
+        form.style.display = 'none';
+        success.style.display = 'block';
+        success.style.opacity = '0';
+        success.style.transition = 'opacity 0.4s';
+        setTimeout(() => success.style.opacity = '1', 50);
+      }, 400);
+    } else {
+      throw new Error(result.message || 'Error desconocido');
+    }
+
+  } catch (err) {
+    // Error — mostrar mensaje de fallo
+    console.error('Error al enviar formulario:', err);
+    btn.textContent = 'Enviar solicitud ✦';
+    btn.disabled = false;
+    btn.style.opacity = '1';
+    error.style.display = 'block';
+    error.style.opacity = '0';
+    error.style.transition = 'opacity 0.4s';
+    setTimeout(() => error.style.opacity = '1', 50);
+    // Ocultar el error después de 6 segundos
+    setTimeout(() => { error.style.opacity = '0'; setTimeout(() => error.style.display = 'none', 400); }, 6000);
+  }
+}
+
+</script>
+</body>
+</html>
