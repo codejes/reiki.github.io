@@ -225,15 +225,63 @@ footer { background:rgba(2,5,16,.98); border-top:1px solid rgba(255,255,255,.04)
 .tweak-row input[type=range] { width:100%; accent-color:var(--gold); }
 .tweak-row select { padding:.35rem .55rem; font-size:.76rem; border-radius:6px; }
 
-/* ── RESPONSIVE ── */
+/* ── RESPONSIVE — Tablet ── */
 @media(max-width:860px){
   nav { padding:.9rem 1.4rem; }
   .nav-links { display:none; }
   .sobre-grid,.contacto-wrap { grid-template-columns:1fr; gap:2rem; }
-  .cursos-grid,.testimonios-grid { grid-template-columns:1fr; }
+  .cursos-grid,.testimonios-grid { grid-template-columns:1fr 1fr; gap:1rem; }
   .fecha-item { grid-template-columns:60px 1fr; }
   .fecha-item > div:last-child { display:none; }
-  .section-inner { padding:4rem 1.4rem; }
+  .section-inner { padding:4rem 2rem; }
+  .sobre-img-placeholder { max-width:200px; }
+  .sobre-stats { gap:1.4rem; }
+  .branch-label .lbl-inner { font-size:.95rem; padding:.22rem .65rem; }
+}
+
+/* ── RESPONSIVE — Mobile ── */
+@media(max-width:560px){
+  html { scroll-snap-type:none; }
+  .full { height:auto; min-height:100svh; overflow:visible; }
+  #inicio { height:100vh; height:100svh; min-height:500px; overflow:hidden; }
+
+  nav { padding:.7rem 1rem; }
+  .nav-cta { font-size:.62rem; padding:.36rem .85rem; }
+
+  .hero-content { padding:2.2rem 1.2rem 1.8rem; }
+  .hero-eyebrow { font-size:.58rem; }
+  .hero-actions { flex-direction:column; align-items:center; gap:.65rem; }
+  .btn-primary,.btn-ghost { width:100%; max-width:260px; text-align:center; }
+  .scroll-hint { display:none; }
+
+  .branch-label .lbl-inner { font-size:.82rem; padding:.2rem .55rem; letter-spacing:.02em; }
+
+  .section-inner { padding:5rem 1.2rem 2.5rem; justify-content:flex-start; }
+  .section-title { font-size:clamp(1.4rem,5.5vw,2rem); }
+
+  .sobre-img-placeholder { max-width:130px; }
+  .sobre-stats { gap:.9rem; flex-wrap:wrap; }
+  .stat-num { font-size:1.9rem; }
+
+  .cursos-grid,.testimonios-grid { grid-template-columns:1fr; margin-top:1.4rem; gap:.85rem; }
+  .curso-card { padding:1.2rem; }
+  .curso-name { font-size:1.25rem; }
+  .curso-desc { font-size:.78rem; }
+
+  .fechas-list { margin-top:1.4rem; gap:.7rem; }
+  .fecha-item { padding:.9rem 1rem; gap:.9rem; }
+  .fecha-day { font-size:1.5rem; }
+  .fecha-curso { font-size:.9rem; }
+  .fecha-detail { font-size:.7rem; }
+
+  .contacto-wrap { gap:1.5rem; }
+  .form-row { grid-template-columns:1fr; gap:.8rem; }
+
+  footer { padding:1.8rem 1.2rem; }
+  .footer-links { gap:.9rem; }
+  .footer-logo { font-size:1.1rem; }
+
+  #tweaks-panel { bottom:.7rem; right:.7rem; width:185px; }
 }
 </style>
 </head>
@@ -588,7 +636,7 @@ function mkBranch(x,y,angle,len,wid,depth){
       const lx=x2+srr(-30,30), ly=y2+srr(-24,24);
       // Skip leaves in the lower-center trunk area
       const fromCx=Math.abs(lx-cx);
-      const isInnerLow = fromCx < H*0.18 && ly > (baseY - trLen*0.75);
+      const isInnerLow = fromCx < H*0.28 && ly > (baseY - trLen*0.88);
       if(!isInnerLow)
         leaves.push({x:lx,y:ly,a:sr()*Math.PI*2,sz:srr(12,23),c:leafPalette[Math.floor(sr()*leafPalette.length)],ph:sr()*Math.PI*2});
     }
@@ -600,7 +648,8 @@ const navTips=NAV.map(()=>({x:0,y:0}));
 
 function buildTree(){
   _s=7331; branches=[]; leaves=[]; branchOrder=0;
-  const tH=H*0.54;
+  /* Cap tH so the widest branches (±144°, reach≈0.74×tH) stay inside the canvas */
+  const tH=Math.min(H*0.54, W*0.46);
   trLen=tH*0.40;
   cx=W*0.5; baseY=H*0.72;
 
@@ -619,45 +668,40 @@ function buildTree(){
     {hr:0.38,a:-Math.PI*0.36,l:tH*0.30},
     {hr:0.20,a:-Math.PI*0.20,l:tH*0.32},
   ];
-  /* Label positions aligned to outer leaf clusters */
-  const labelFrac = [
-    {fx:0.30, fy:0.52}, // Sobre mí — far-left cluster
-    {fx:0.42, fy:0.33}, // Cursos — upper-left cluster
-    {fx:0.50, fy:0.19}, // Fechas — top center
-    {fx:0.58, fy:0.33}, // Testimonios — upper-right cluster
-    {fx:0.70, fy:0.52}, // Contacto — far-right cluster
-  ];
   mc.forEach((m,i)=>{
     const sy=baseY-trLen*m.hr;
-    navTips[i].x = W * labelFrac[i].fx;
-    navTips[i].y = H * labelFrac[i].fy;
+    // Compute label position from branch geometry so it always tracks the tree.
+    // Branch recurses depth 6→2 (4 levels) at ~0.69 scale per level.
+    // Cumulative reach from branch origin ≈ m.l * (1+0.69+0.69²+0.69³) ≈ m.l * 2.49.
+    // Multiply by 1.15 to push label just outside the leaf cluster center.
+    const reach = m.l * 2.49 * 1.15;
+    navTips[i].x = cx + Math.cos(m.a) * reach;
+    navTips[i].y = sy + Math.sin(m.a) * reach;
     mkBranch(cx,sy,m.a,m.l,13,6);
   });
 
-  /* Post-process: remove ALL leaves in the inner center zone + trunk corridor */
-  const innerR = tH * 0.45;
-  const innerCy = baseY - trLen * 0.48;
-  leaves = leaves.filter(l => {
-    const dx = l.x - cx, dy = l.y - innerCy;
-    const circDist = Math.sqrt(dx*dx + dy*dy);
-    // Remove leaves in trunk vertical corridor (wider)
-    const inTrunk = Math.abs(l.x - cx) < tH * 0.15 && l.y > (baseY - trLen * 1.0);
-    // Remove leaves in lower-center diamond zone
-    const inLowerCenter = Math.abs(l.x - cx) < tH * 0.28 && l.y > (baseY - trLen * 0.72);
-    return circDist > innerR && !inTrunk && !inLowerCenter;
-  });
-
-  /* extra fill leaves */
+  /* extra fill leaves — added BEFORE filter so they get cleaned up too */
   const eC={low:55,mid:115,high:200}[leafDensity];
   for(let i=0;i<eC;i++){
     const a=srr(-Math.PI,0),d=srr(tH*0.1,tH*0.44),sx=srr(-0.78,0.78);
     const lx=cx+Math.cos(a)*d*sx, ly=(baseY-trLen)+srr(-tH*0.2,tH*0.28)+Math.sin(a)*d*0.25;
-    const fromCx=Math.abs(lx-cx);
-    const isInnerLow = fromCx < tH*0.32 && ly > (baseY-trLen*0.78);
-    if(ly<baseY-trLen*0.08 && !isInnerLow){
+    if(ly<baseY-trLen*0.08){
       leaves.push({x:lx,y:ly,a:sr()*Math.PI*2,sz:srr(9,19),c:leafPalette[Math.floor(sr()*leafPalette.length)],ph:sr()*Math.PI*2});
     }
   }
+
+  /* Post-process: remove ALL leaves in the inner center zone + trunk corridor */
+  const innerR = tH * 0.72;
+  const innerCy = baseY - trLen * 0.55;
+  leaves = leaves.filter(l => {
+    const dx = l.x - cx, dy = l.y - innerCy;
+    const circDist = Math.sqrt(dx*dx + dy*dy);
+    const inTrunk = Math.abs(l.x - cx) < tH * 0.15 && l.y > (baseY - trLen * 1.0);
+    const heightRatio = Math.max(0, (l.y - (baseY - trLen * 1.1)) / (trLen * 1.1));
+    const coneWidth = tH * (0.18 + heightRatio * 0.55);
+    const inCone = Math.abs(l.x - cx) < coneWidth && l.y > (baseY - trLen * 1.1);
+    return circDist > innerR && !inTrunk && !inCone;
+  });
   totalBranches=branchOrder;
 }
 
@@ -677,14 +721,18 @@ function drawLeaf(lx,ly,angle,sz,color,alpha){
 /* ── Labels ── */
 function rebuildLabels(){
   labelsEl.innerHTML='';
+  const pad=62; // min px from viewport edge (accounts for label half-width)
   NAV.forEach((n,i)=>{
     const tip=navTips[i];
+    const x=Math.max(pad, Math.min(W-pad, tip.x));
+    const y=Math.max(pad, Math.min(H-50, tip.y));
     const el=document.createElement('div'); el.className='branch-label';
-    el.style.cssText=`left:${tip.x}px;top:${tip.y}px;transform:translate(-50%,-50%)`;
+    el.style.cssText=`left:${x}px;top:${y}px;transform:translate(-50%,-50%)`;
     const inner=document.createElement('div'); inner.className='lbl-inner';
     inner.textContent=n.name; inner.style.color=n.color;
     el.appendChild(inner);
     el.addEventListener('click',()=>document.getElementById(n.id)?.scrollIntoView({behavior:'smooth'}));
+    if(entryDone) el.classList.add('visible'); // already animated — show immediately
     labelsEl.appendChild(el);
   });
 }
